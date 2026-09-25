@@ -1,0 +1,30 @@
+workflow: reviewguard
+trigger: pull_request
+steps:
+  - id: intake
+    type: deterministic
+    action: parse_diff
+  - id: pre_pass
+    type: deterministic
+    action: [semgrep_scan, gitleaks_scan]
+  - id: review
+    type: ai_parallel
+    subagents:
+      - security
+      - correctness
+      - performance
+      - testing
+      - maintainability
+  - id: aggregate
+    type: deterministic
+    action: dedupe_and_rank
+  - id: patch
+    type: ai
+    subagent: patch_generator
+    condition: severity >= medium
+  - id: verify
+    type: ai
+    subagent: test_runner
+  - id: report
+    type: deterministic
+    action: render_and_post

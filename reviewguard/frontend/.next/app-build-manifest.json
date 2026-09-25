@@ -1,0 +1,15 @@
+{
+  "pages": {
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/css-node_modules_tailwindcss_index_css-src_styles_globals_css-src_styles_tailwind_css-node_mo-b4e53d.css",
+      "static/chunks/app/layout.js"
+    ]
+  }
+}
