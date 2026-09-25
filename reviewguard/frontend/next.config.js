@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   async rewrites() {
     // Use localhost for local dev, backend:8000 for Docker
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+    // Skip rewrites if NEXT_PUBLIC_API_URL is not set (using mock data)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl || apiUrl === 'http://localhost:8000') {
+      return [];
+    }
     return [
       {
         source: '/api/:path*',
