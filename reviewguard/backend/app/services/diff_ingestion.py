@@ -36,7 +36,7 @@ def parse_diff(diff_content: str) -> ParsedDiff:
     # Handle both str and bytes
     if isinstance(diff_content, bytes):
         # Try to decode with common encodings
-        for encoding in ['utf-8', 'utf-16', 'latin-1']:
+        for encoding in ['utf-8', 'utf-16', 'utf-16-le', 'utf-16-be', 'latin-1']:
             try:
                 diff_content = diff_content.decode(encoding)
                 break
@@ -60,7 +60,7 @@ def parse_diff(diff_content: str) -> ParsedDiff:
             for pf in patch_set:
                 for hunk in pf:
                     all_hunks.append({
-                        "file_path": pf.path,
+                        "file_path": pf.path.rstrip('\r'),
                         "source_start": hunk.source_start,
                         "source_length": hunk.source_length,
                         "target_start": hunk.target_start,

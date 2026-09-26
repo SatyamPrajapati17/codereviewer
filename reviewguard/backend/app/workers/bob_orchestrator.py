@@ -270,12 +270,15 @@ async def run_security_subagent(diff_content: str, hunks: List[Dict], pre_pass: 
     import re
     secret_patterns = [
         (r'(?i)(api[_-]?key|secret[_-]?key|access[_-]?token|auth[_-]?token)\s*[:=]\s*["\'][^"\']{20,}["\']', "API key/token"),
-        (r'(?i)(aws[_-]?secret|aws[_-]?access)\s*[:=]\s*["\'][^"\']+["\']', "AWS credentials"),
+        (r'(?i)(aws[_-]?secret[_-]?key|aws[_-]?access[_-]?key)\s*[:=]\s*["\'][^"\']+["\']', "AWS credentials"),
         (r'(?i)password\s*[:=]\s*["\'][^"\']+["\']', "Password"),
         (r'AKIA[0-9A-Z]{16}', "AWS Access Key"),
         (r'sk_live_[0-9a-zA-Z]{24,}', "Stripe Secret Key"),
         (r'ghp_[0-9a-zA-Z]{36}', "GitHub Personal Access Token"),
     ]
+    
+    # Also check for generic KEY = "value" patterns in config-like files
+    generic_secret_pattern = r'(?i)(\w*(?:secret|key|token|password)\w*)\s*=\s*["\'][^"\']{10,}["\']'
     
     for hunk in hunks:
         for line in hunk["lines"]:
@@ -295,6 +298,19 @@ async def run_security_subagent(diff_content: str, hunks: List[Dict], pre_pass: 
                         explanation=f"Hardcoded {secret_type} detected at line {line_no}. Move to environment variable.",
                         confidence=0.9
                     ))
+            
+            # Generic secret detection
+            if re.search(generic_secret_pattern, content):
+                findings.append(SubagentFinding(
+                    category="security",
+                    severity="critical",
+                    cwe_ref="CWE-798",
+                    file_path=hunk["file_path"],
+                    line_start=line_no,
+                    line_end=line_no,
+                    explanation=f"Hardcoded secret/key detected at line {line_no}. Move to environment variable.",
+                    confidence=0.85
+                ))
             
             # Direct SQL injection detection
             if re.search(r'f["\'].*\{.*\}.*["\']', content) and any(kw in content.lower() for kw in ['select', 'insert', 'update', 'delete', 'execute', 'query']):
@@ -427,7 +443,7 @@ async def run_correctness_subagent(diff_content: str, hunks: List[Dict], repo_ro
     for hunk in hunks:
         for line in hunk["lines"]:
             content = line["content"]
-            line_no = line.get("target_line_no", 0)
+            line_no = get_line_number(line)
             
             # Bare except/catch
             if "except:" in content or "except Exception:" in content:
@@ -484,7 +500,7 @@ async def run_performance_subagent(diff_content: str, hunks: List[Dict], repo_ro
     for hunk in hunks:
         for line in hunk["lines"]:
             content = line["content"]
-            line_no = line.get("target_line_no", 0)
+            line_no = get_line_number(line)
             
             # Nested loops detection
             if "for " in content and " in " in content:
@@ -546,7 +562,7 @@ async def run_testing_subagent(diff_content: str, hunks: List[Dict], repo_root: 
     for hunk in hunks:
         for line in hunk["lines"]:
             content = line["content"]
-            line_no = line.get("target_line_no", 0)
+            line_no = get_line_number(line)
             
             # Detect function definitions
             if content.strip().startswith("def ") or content.strip().startswith("async def "):
