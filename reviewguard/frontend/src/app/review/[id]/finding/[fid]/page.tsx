@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { TopNav } from "@/components/layout/TopNav";
 import { SharpCard, MetadataLabel, StatusPill, SeverityBadge, SignalLimeCTA, NeonDivider, OutlinedGreenButton, CodeBlock, AccentWord, SectionEyebrow } from "@/components/ui";
 import Link from "next/link";
@@ -9,11 +10,12 @@ import { api, Finding } from "@/lib/api";
 export default function FindingDetailPage({
   params,
 }: {
-  params: Promise<{ id: string; fid: string }>;
+  params: { id: string; fid: string };
 }) {
-  const resolvedParams = use(params);
+  const resolvedParams = params;
   const [finding, setFinding] = useState<Finding | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchFinding = async () => {
@@ -27,7 +29,8 @@ export default function FindingDetailPage({
       }
     };
     fetchFinding();
-  }, [resolvedParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedParams.id, resolvedParams.fid]);
 
   if (isLoading || !finding) {
     return (
@@ -91,8 +94,8 @@ export default function FindingDetailPage({
         {/* Explanation */}
         <SharpCard className="mb-8">
           <SectionEyebrow>EXPLANATION</SectionEyebrow>
-          <div className="mt-4 prose prose-invert max-w-none">
-            <p className="text-[var(--color-bone)] whitespace-pre-wrap">{finding.explanation}</p>
+          <div className="mt-4 text-[var(--color-bone)] whitespace-pre-wrap leading-relaxed">
+            {finding.explanation}
           </div>
           <div className="mt-4 flex items-center gap-4 text-sm text-[var(--color-smoke)]">
             <span>Confidence: <strong className="text-[var(--color-chalk)]">{(finding.confidence * 100).toFixed(0)}%</strong></span>
@@ -125,7 +128,7 @@ export default function FindingDetailPage({
         <SharpCard className="mb-8">
           <SectionEyebrow>ACTIONS</SectionEyebrow>
           <div className="mt-4 flex flex-wrap gap-4">
-            <SignalLimeCTA onClick={() => window.location.href = `/review/${reviewId}/finding/${finding.id}/patch`}>
+            <SignalLimeCTA onClick={() => router.push(`/review/${reviewId}/finding/${finding.id}/patch`)}>
               VIEW SUGGESTED PATCH
             </SignalLimeCTA>
             <OutlinedGreenButton onClick={() => alert("Dismiss action - requires reason")}>
@@ -151,8 +154,8 @@ export default function FindingDetailPage({
         {finding.refactor_suggestion && (
           <SharpCard className="mb-8">
             <SectionEyebrow>REFACTOR SUGGESTION</SectionEyebrow>
-            <div className="mt-4 prose prose-invert max-w-none">
-              <p className="text-[var(--color-bone)] whitespace-pre-wrap">{finding.refactor_suggestion}</p>
+            <div className="mt-4 text-[var(--color-bone)] whitespace-pre-wrap leading-relaxed">
+              {finding.refactor_suggestion}
             </div>
           </SharpCard>
         )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, use } from "react";
+import { useEffect, useState } from "react";
 import { TopNav } from "@/components/layout/TopNav";
 import { SharpCard, MetadataLabel, StatusPill, SeverityBadge, SignalLimeCTA, NeonDivider, OutlinedGreenButton, CodeBlock, SectionEyebrow, LoadingDots } from "@/components/ui";
 import Link from "next/link";
@@ -9,9 +9,9 @@ import { api, Patch } from "@/lib/api";
 export default function PatchPreviewPage({
   params,
 }: {
-  params: Promise<{ id: string; fid: string }>;
+  params: { id: string; fid: string };
 }) {
-  const resolvedParams = use(params);
+  const resolvedParams = params;
   const [patch, setPatch] = useState<Patch | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isApplying, setIsApplying] = useState(false);
@@ -29,7 +29,8 @@ export default function PatchPreviewPage({
       }
     };
     fetchPatch();
-  }, [resolvedParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedParams.id, resolvedParams.fid]);
 
   const handleApply = async () => {
     setIsApplying(true);

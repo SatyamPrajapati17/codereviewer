@@ -10,8 +10,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -49,6 +47,7 @@ yarn-error.log*
 out/
 build/
 dist/
+*.tsbuildinfo
 
 # OS
 .DS_Store

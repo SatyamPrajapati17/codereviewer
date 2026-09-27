@@ -30,7 +30,7 @@ export function TopNav() {
         ))}
       </div>
 
-      <Link href="/" className="signal-lime-cta">
+      <Link href="/connect" className="signal-lime-cta">
         NEW REVIEW
       </Link>
     </nav>

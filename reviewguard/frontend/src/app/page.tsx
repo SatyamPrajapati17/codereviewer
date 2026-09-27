@@ -226,27 +226,33 @@ export default function HomePage() {
               className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16"
               variants={itemVariants}
             >
-              <SignalLimeCTA className="w-full sm:w-auto px-10 py-4 text-lg" onClick={() => window.location.href = "/"}>
-                RUN YOUR FIRST REVIEW
-              </SignalLimeCTA>
-              <OutlinedGreenButton className="w-full sm:w-auto px-10 py-4 text-lg" onClick={() => window.location.href = "/dashboard"}>
-                VIEW DEMO DASHBOARD
-              </OutlinedGreenButton>
+              <Link href="/connect" className="w-full sm:w-auto">
+                <SignalLimeCTA className="w-full sm:w-auto px-10 py-4 text-lg">
+                  RUN YOUR FIRST REVIEW
+                </SignalLimeCTA>
+              </Link>
+              <Link href="/dashboard" className="w-full sm:w-auto">
+                <OutlinedGreenButton className="w-full sm:w-auto px-10 py-4 text-lg">
+                  VIEW DEMO DASHBOARD
+                </OutlinedGreenButton>
+              </Link>
             </motion.div>
 
             {/* Stats */}
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-12"
+              className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-[var(--page-max-width)] mx-auto"
               variants={containerVariants}
             >
               {stats.map((stat, i) => (
                 <motion.div key={stat.label} variants={statVariants} custom={i}>
-                  <div className="font-[var(--font-jetbrains-mono)] text-4xl font-bold text-[var(--color-signal-lime)]">
-                    {stat.value}
-                  </div>
-                  <div className="text-xs uppercase tracking-widest text-[var(--color-smoke)] mt-1">
-                    {stat.label}
-                  </div>
+                  <SharpCard className="text-center py-8 px-6">
+                    <div className="font-[var(--font-jetbrains-mono)] text-4xl font-bold text-[var(--color-signal-lime)]">
+                      {stat.value}
+                    </div>
+                    <div className="text-xs uppercase tracking-widest text-[var(--color-smoke)] mt-2">
+                      {stat.label}
+                    </div>
+                  </SharpCard>
                 </motion.div>
               ))}
             </motion.div>
@@ -273,26 +279,35 @@ export default function HomePage() {
               The <span className="accent-word">Pipeline</span>
             </h2>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
               {pipelineSteps.map((step, i) => (
                 <motion.div
                   key={step.step}
-                  className="flex flex-col md:flex-row gap-8 p-8 bg-[var(--surface-card)] border border-[var(--color-graphite)] group"
+                  className="relative"
                   variants={itemVariants}
-                  whileHover={{ x: 8, borderColor: "var(--color-signal-lime)", transition: { duration: 0.3 } }}
+                  whileHover={{ x: 8, transition: { duration: 0.3 } }}
                 >
-                  <div className="flex-shrink-0 w-16 text-center">
-                    <div className="font-[var(--font-jetbrains-mono)] text-2xl font-bold text-[var(--color-signal-lime)]">
-                      {step.step}
+                  {/* Step connector line (except last) */}
+                  {i < pipelineSteps.length - 1 && (
+                    <div className="absolute left-8 top-0 w-px h-full bg-[var(--color-graphite)] -translate-x-1/2" />
+                  )}
+                  <SharpCard className="relative pl-20 md:pl-28 py-6">
+                    <div className="flex items-start gap-6">
+                      <div className="flex-shrink-0 w-16 text-center relative z-10">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[var(--color-signal-lime)] text-[var(--color-void-black)] font-[var(--font-jetbrains-mono)] text-xl font-bold mx-auto">
+                          {step.step}
+                        </div>
+                        {/* Connector dot */}
+                        <div className="w-px h-16 bg-[var(--color-graphite)] mx-auto mt-2" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-[var(--font-inter-tight)] font-medium text-lg uppercase tracking-wider text-[var(--color-signal-lime)] mb-2">
+                          {step.label}
+                        </h3>
+                        <p className="text-[var(--color-ash)] leading-relaxed">{step.desc}</p>
+                      </div>
                     </div>
-                    <div className="w-px h-full bg-[var(--color-graphite)] mx-auto mt-4 group-hover:bg-[var(--color-signal-lime)] transition-colors" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-[var(--font-inter-tight)] font-medium text-lg uppercase tracking-wider text-[var(--color-signal-lime)] mb-2">
-                      {step.label}
-                    </h3>
-                    <p className="text-[var(--color-ash)] leading-relaxed">{step.desc}</p>
-                  </div>
+                  </SharpCard>
                 </motion.div>
               ))}
             </div>
@@ -357,12 +372,14 @@ export default function HomePage() {
                     <p className="font-[var(--font-jetbrains-mono)] text-xs text-[var(--color-ash)]">PR #42 · 6 files · +142/−18</p>
                   </div>
                 </div>
-                <SignalLimeCTA className="whitespace-nowrap" onClick={() => window.location.href = "/"}>
-                  RUN REVIEW
-                </SignalLimeCTA>
+                <Link href="/connect" className="whitespace-nowrap">
+                  <SignalLimeCTA>
+                    RUN REVIEW
+                  </SignalLimeCTA>
+                </Link>
               </div>
 
-              <div className="p-6 font-[var(--font-jetbrains-mono)] text-sm text-[var(--color-ash)] max-h-96 overflow-auto">
+              <div className="p-6 font-[var(--font-jetbrains-mono)] text-sm text-[var(--color-ash)] max-h-96 overflow-auto max-w-full">
                 {`diff --git a/src/config.py b/src/config.py
 -AWS_SECRET_KEY = "AKIAIOSFODNN7EXAMPLE"
 +AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
@@ -391,9 +408,11 @@ diff --git a/src/payments/processor.py b/src/payments/processor.py
             </motion.div>
 
             <div className="mt-6 text-center">
-              <OutlinedGreenButton onClick={() => window.location.href = "/dashboard"}>
-                VIEW FULL DEMO DASHBOARD
-              </OutlinedGreenButton>
+<Link href="/dashboard">
+                <OutlinedGreenButton>
+                  VIEW FULL DEMO DASHBOARD
+                </OutlinedGreenButton>
+              </Link>
             </div>
           </div>
         </section>
@@ -412,12 +431,16 @@ diff --git a/src/payments/processor.py b/src/payments/processor.py
               First review is free — see what your team has been missing.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <SignalLimeCTA className="w-full sm:w-auto px-10 py-4 text-lg" onClick={() => window.location.href = "/"}>
-                GET STARTED FREE
-              </SignalLimeCTA>
-              <OutlinedGreenButton className="w-full sm:w-auto px-10 py-4 text-lg" onClick={() => window.location.href = "/dashboard"}>
-                VIEW DASHBOARD
-              </OutlinedGreenButton>
+              <Link href="/connect" className="w-full sm:w-auto">
+                <SignalLimeCTA className="w-full sm:w-auto px-10 py-4 text-lg">
+                  GET STARTED FREE
+                </SignalLimeCTA>
+              </Link>
+              <Link href="/dashboard">
+                <OutlinedGreenButton className="w-full sm:w-auto px-10 py-4 text-lg">
+                  VIEW DASHBOARD
+                </OutlinedGreenButton>
+              </Link>
             </div>
           </motion.div>
         </section>

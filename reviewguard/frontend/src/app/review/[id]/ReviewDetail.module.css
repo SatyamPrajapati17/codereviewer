@@ -1,0 +1,35 @@
+.reviewTabs input[type="radio"] {
+  display: none;
+}
+.reviewTabs .tabBtn {
+  padding: 8px 16px;
+  font-family: var(--font-inter-tight);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reviewTabs .tabBtn:hover {
+  color: var(--color-bone);
+}
+.reviewTabs input[type="radio"]:checked + .tabBtn {
+  color: var(--color-signal-lime);
+  border-bottom-color: var(--color-signal-lime);
+}
+.reviewTabs .tabPanel {
+  display: none;
+}
+.reviewTabs input[id$="-all"]:checked ~ .tabPanel[id$="-panel-all"],
+.reviewTabs input[id$="-security"]:checked ~ .tabPanel[id$="-panel-security"],
+.reviewTabs input[id$="-correctness"]:checked ~ .tabPanel[id$="-panel-correctness"],
+.reviewTabs input[id$="-performance"]:checked ~ .tabPanel[id$="-panel-performance"],
+.reviewTabs input[id$="-testing"]:checked ~ .tabPanel[id$="-panel-testing"],
+.reviewTabs input[id$="-maintainability"]:checked ~ .tabPanel[id$="-panel-maintainability"] {
+  display: block;
+}

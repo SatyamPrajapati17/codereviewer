@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { TopNav } from "@/components/layout/TopNav";
 import { SharpCard, MetadataLabel, StatusPill, SeverityBadge, SignalLimeCTA, NeonDivider, TabButton, FindingCard, LoadingDots } from "@/components/ui";
 import { api, Review, Finding, formatDate } from "@/lib/api";
@@ -28,6 +30,7 @@ export default function DashboardPage() {
   const [reviews, setReviews] = useState<ReviewWithCounts[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"all" | "blocked" | "passed" | "needs_attention">("all");
+  const router = useRouter();
 
   useEffect(() => {
     fetchReviews();
@@ -79,9 +82,11 @@ export default function DashboardPage() {
             <MetadataLabel>REVIEW DASHBOARD</MetadataLabel>
             <h1 className="mt-2">Review History</h1>
           </div>
-          <SignalLimeCTA onClick={() => window.location.href = "/"}>
-            NEW REVIEW
-          </SignalLimeCTA>
+          <Link href="/connect">
+            <SignalLimeCTA>
+              NEW REVIEW
+            </SignalLimeCTA>
+          </Link>
         </div>
 
         <NeonDivider />
@@ -118,9 +123,11 @@ export default function DashboardPage() {
             <div className="text-4xl mb-4">📋</div>
             <h2 className="text-xl mb-2">No reviews yet</h2>
             <p className="text-[var(--color-ash)] mb-6">Run your first review to see results here</p>
-            <SignalLimeCTA onClick={() => window.location.href = "/"}>
+            <Link href="/connect">
+            <SignalLimeCTA>
               RUN FIRST REVIEW
             </SignalLimeCTA>
+          </Link>
           </SharpCard>
         ) : (
           <div className="space-y-4">
@@ -128,7 +135,7 @@ export default function DashboardPage() {
               <FindingCard
                 key={review.id}
                 severity={review.overall_verdict === "blocked" ? "critical" : review.overall_verdict === "passed" ? "low" : "medium"}
-                onClick={() => window.location.href = `/review/${review.id}`}
+                onClick={() => router.push(`/review/${review.id}`)}
                 style={{ cursor: "pointer" }}
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
