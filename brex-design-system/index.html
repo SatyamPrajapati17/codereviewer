@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brex Design System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Using a fallback for Flecha since it's a custom font -->
+    <style>
+        @font-face {
+            font-family: 'Flecha';
+            src: url('https://fonts.gstatic.com/s/recklessneue/v12/-F5-TCHf4-H5n6GGBfSQzZ2cyHc.woff2') format('woff2');
+            /* This is a fallback - in reality you'd need the actual Flecha font */
+            font-display: swap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Brex Design System</h1>
+            <p>A white concrete financial workbench lit by a single orange ember</p>
+        </header>
+
+        <!-- Color Tokens -->
+        <section class="tokens-section">
+            <h2>Color Tokens</h2>
+            <div class="color-grid">
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #ff5900;"></div>
+                    <div class="color-info">
+                        <h3>Ember</h3>
+                        <p>#ff5900</p>
+                        <p><code>--color-ember</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #000710;"></div>
+                    <div class="color-info">
+                        <h3>Abyss</h3>
+                        <p>#000710</p>
+                        <p><code>--color-abyss</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #15191e;"></div>
+                    <div class="color-info">
+                        <h3>Carbon</h3>
+                        <p>#15191e</p>
+                        <p><code>--color-carbon</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #000000;"></div>
+                    <div class="color-info">
+                        <h3>Ink</h3>
+                        <p>#000000</p>
+                        <p><code>--color-ink</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #ffffff;"></div>
+                    <div class="color-info">
+                        <h3>Paper</h3>
+                        <p>#ffffff</p>
+                        <p><code>--color-paper</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #f3f3f7;"></div>
+                    <div class="color-info">
+                        <h3>Fog</h3>
+                        <p>#f3f3f7</p>
+                        <p><code>--color-fog</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #b9bbc6;"></div>
+                    <div class="color-info">
+                        <h3>Mist</h3>
+                        <p>#b9bbc6</p>
+                        <p><code>--color-mist</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #8b8d98;"></div>
+                    <div class="color-info">
+                        <h3>Steel</h3>
+                        <p>#8b8d98</p>
+                        <p><code>--color-steel</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #6f737b;"></div>
+                    <div class="color-info">
+                        <h3>Pewter</h3>
+                        <p>#6f737b</p>
+                        <p><code>--color-pewter</code></p>
+                    </div>
+                </div>
+                <div class="color-token">
+                    <div class="color-swatch" style="background-color: #60646c;"></div>
+                    <div class="color-info">
+                        <h3>Graphite</h3>
+                        <p>#60646c</p>
+                        <p><code>--color-graphite</code></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography -->
+        <section class="typography-section">
+            <h2>Typography</h2>
+            <div class="type-scale">
+                <div class="type-sample" style="font-size: 12px; line-height: 1.5; letter-spacing: -0.01px;">
+                    Caption (12px): This is caption text
+                </div>
+                <div class="type-sample" style="font-size: 14px; line-height: 1.43; letter-spacing: -0.01px;">
+                    Body Sm (14px): This is small body text
+                </div>
+                <div class="type-sample" style="font-size: 16px; line-height: 1.5; letter-spacing: -0.01px;">
+                    Body (16px): This is regular body text
+                </div>
+                <div class="type-sample" style="font-size: 20px; line-height: 1.4; letter-spacing: -0.01px;">
+                    Subheading (20px): This is subheading text
+                </div>
+                <div class="type-sample" style="font-size: 24px; line-height: 1.33; letter-spacing: -0.01px;">
+                    Heading Sm (24px): This is heading text
+                </div>
+                <div class="type-sample" style="font-size: 36px; line-height: 1.21; letter-spacing: -0.02px;">
+                    Heading (36px): This is heading text
+                </div>
+                <div class="type-sample" style="font-size: 48px; line-height: 1.2; letter-spacing: -0.025px;">
+                    Heading Lg (48px): This is heading text
+                </div>
+                <div class="type-sample" style="font-size: 72px; line-height: 1; letter-spacing: -0.03px;">
+                    Display (72px): This is display text
+                </div>
+            </div>
+        </section>
+
+        <!-- Components -->
+        <section class="components-section">
+            <h2>Components</h2>
+            
+            <!-- Navigation Bar -->
+            <nav class="navbar">
+                <div class="nav-brand">Brex</div>
+                <div class="nav-links">
+                    <a href="#">Product</a>
+                    <a href="#">Features</a>
+                    <a href="#">Customers</a>
+                    <a href="#">Resources</a>
+                </div>
+                <div class="nav-actions">
+                    <a href="#" class="ghost-link">Sign in</a>
+                    <a href="#" class="ghost-link">See a demo</a>
+                    <button class="btn-primary">Get started</button>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="display-heading">Brex is the financial workbench</h1>
+                    <p class="body">All-in-one corporate card, expense management, and banking platform built for growing businesses.</p>
+                    <div class="hero-action">
+                        <input type="email" placeholder="Enter your email" class="email-input">
+                        <button class="btn-primary">Get started</button>
+                        <a href="#" class="ghost-link">See a demo</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <!-- Placeholder for product visual -->
+                    <div class="placeholder">Product Visual</div>
+                </div>
+            </section>
+
+            <!-- Feature Cards -->
+            <section class="features">
+                <h2 class="heading">The card is just the start</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3 class="heading-sm">Corporate cards</h3>
+                        <p class="body">Customizable cards with real-time controls</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="heading-sm">Expense management</h3>
+                        <p class="body">Automate expense reporting and reimbursements</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="heading-sm">Travel</h3>
+                        <p class="body">Book and manage business travel</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="heading-sm">Bill pay</h3>
+                        <p class="body">Pay vendors and manage subscriptions</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 class="heading-sm">Banking</h3>
+                        <p class="body">Business checking and treasury</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-brand">Brex</div>
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h3 class="heading-sm">Product</h3>
+                            <a href="#">Corporate card</a>
+                            <a href="#">Expense management</a>
+                            <a href="#">Travel</a>
+                            <a href="#">Bill pay</a>
+                            <a href="#">Banking</a>
+                        </div>
+                        <div class="footer-column">
+                            <h3 class="heading-sm">Company</h3>
+                            <a href="#">About</a>
+                            <a href="#">Careers</a>
+                            <a href="#">Blog</a>
+                            <a href="#">Press</a>
+                        </div>
+                        <div class="footer-column">
+                            <h3 class="heading-sm">Resources</h3>
+                            <a href="#">Help center</a>
+                            <a href="#">Security</a>
+                            <a href="#">Developers</a>
+                            <a href="#">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+</body>
+</html>
